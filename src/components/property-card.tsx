@@ -42,7 +42,7 @@ export function PropertyCard({ property }: { property: Property }) {
       </CardContent>
       <CardFooter className="flex items-center justify-between">
         <p className="text-lg font-semibold text-primary">
-          ${property.price.toLocaleString()}
+          ₦{property.price.toLocaleString()}
         </p>
         <div className="flex items-center gap-1">
           <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
