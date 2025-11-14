@@ -30,8 +30,9 @@ export async function fetchProperties(params: FetchPropertiesParams): Promise<Ap
   try {
     const response = await fetch(url);
     if (!response.ok) {
-        const errorData = await response.json().catch(() => null);
-        throw new Error(errorData?.message || `Failed to fetch properties. Status: ${response.status}`);
+        const errorText = await response.text();
+        console.error("API response not OK:", response.status, errorText);
+        throw new Error(`Failed to fetch properties. Status: ${response.status}. Response: ${errorText}`);
     }
     return response.json();
   } catch (error: any) {
