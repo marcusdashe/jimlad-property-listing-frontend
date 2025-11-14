@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Button } from './ui/button';
 
 export function Header() {
   return (
@@ -23,9 +22,6 @@ export function Header() {
               Contact
             </Link>
           </nav>
-          <div className="hidden md:block">
-            <Button>Sign In</Button>
-          </div>
         </div>
       </div>
     </header>
