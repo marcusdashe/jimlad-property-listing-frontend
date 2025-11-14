@@ -42,12 +42,20 @@ export async function fetchProperties(params: FetchPropertiesParams): Promise<Ap
 
 export async function createProperty(formData: FormData): Promise<ApiResponse<Property>> {
     const url = `${API_BASE_URL}/properties`;
+    console.log(`Creating property at: ${url}`);
     try {
         const response = await fetch(url, {
             method: 'POST',
             body: formData,
         });
-        return response.json();
+
+        const responseData = await response.json();
+
+        if (!response.ok) {
+            throw new Error(responseData.message || `Failed to create property. Status: ${response.status}`);
+        }
+        
+        return responseData;
     } catch (error: any) {
         console.error('Create property error:', error);
         return { success: false, message: error.message || 'An unknown network error occurred.', data: null as any };
