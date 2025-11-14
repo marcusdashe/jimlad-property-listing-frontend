@@ -1,6 +1,6 @@
 import type { Property } from './properties';
 
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000';
 
 type FetchPropertiesParams = {
   location?: string;
@@ -22,10 +22,13 @@ export async function fetchProperties(params: FetchPropertiesParams): Promise<Fe
   if (params.minPrice) query.append('minPrice', params.minPrice);
   if (params.maxPrice) query.append('maxPrice', params.maxPrice);
 
-  const response = await fetch(`${API_BASE_URL}/properties?${query.toString()}`);
+  const url = `${API_BASE_URL}/properties?${query.toString()}`;
+  console.log(`Fetching properties from: ${url}`);
+
+  const response = await fetch(url);
 
   if (!response.ok) {
-    const errorData = await response.json().catch(() => ({ message: 'An unknown error occurred' }));
+    const errorData = await response.json().catch(() => ({ message: 'An unknown error occurred while communicating with the API.' }));
     throw new Error(errorData.message || 'Failed to fetch properties');
   }
 
