@@ -80,8 +80,9 @@ export default function Home() {
         </div>
       ) : error ? (
         <div className="text-center py-16">
-          <h2 className="text-2xl font-semibold text-destructive">Error</h2>
+          <h2 className="text-2xl font-semibold text-destructive">Something went wrong</h2>
           <p className="text-muted-foreground mt-2">{error}</p>
+          <p className="text-muted-foreground mt-2">There was an issue on the server. Please check your backend logs.</p>
         </div>
       ) : properties.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
