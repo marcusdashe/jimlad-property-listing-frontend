@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import type { Property } from '@/lib/properties';
 import { fetchProperties } from '@/lib/api';
 import { PropertyCard } from '@/components/property-card';
