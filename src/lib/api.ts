@@ -43,6 +43,23 @@ export async function fetchProperties(params: FetchPropertiesParams): Promise<Ap
   }
 }
 
+export async function fetchPropertyById(id: string): Promise<ApiResponse<Property>> {
+    const url = `${API_BASE_URL}/properties/${id}`;
+    console.log(`Fetching property from: ${url}`);
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Failed to fetch property. Status: ${response.status}. Response: ${errorText}`);
+        }
+        return await response.json();
+    } catch (error: any) {
+        console.error(`Fetch property by ID (${id}) error:`, error);
+        return { success: false, message: error.message || 'An unknown network error occurred.', data: null as any };
+    }
+}
+
+
 export async function createProperty(formData: FormData): Promise<ApiResponse<Property>> {
     const url = `${API_BASE_URL}/properties`;
     console.log(`Creating property at: ${url}`);
