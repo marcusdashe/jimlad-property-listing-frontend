@@ -12,7 +12,7 @@ export function Header() {
             </Link>
           </div>
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/properties" className="font-medium text-accent-foreground hover:text-primary transition-colors">
+            <Link href="/" className="font-medium text-accent-foreground hover:text-primary transition-colors">
               Properties
             </Link>
             <Link href="/list-property" className="font-medium text-accent-foreground hover:text-primary transition-colors">
