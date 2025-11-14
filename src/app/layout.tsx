@@ -4,7 +4,7 @@ import { Header } from '@/components/header';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'EstateFind',
+  title: 'Jimlad Properties',
   description: 'Find your next dream home.',
 };
 
