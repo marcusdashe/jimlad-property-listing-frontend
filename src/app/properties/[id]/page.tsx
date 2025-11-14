@@ -25,6 +25,7 @@ export default function PropertyDetailsPage() {
         try {
           const response = await fetchPropertyById(id as string);
           if (response.success) {
+            // The API doesn't provide bedrooms, bathrooms, or rating, so we add dummy data.
             const propertyData = {
                 ...response.data,
                 bedrooms: response.data.bedrooms || Math.floor(Math.random() * 4) + 1,
