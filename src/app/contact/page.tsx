@@ -165,7 +165,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="font-semibold">Call Us</h3>
-                  <p className="text-muted-foreground">(+234) 801 234 5678</p>
+                  <p className="text-muted-foreground">0707 189 9700</p>
                 </div>
               </div>
             </CardContent>
