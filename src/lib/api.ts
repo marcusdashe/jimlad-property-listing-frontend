@@ -1,6 +1,6 @@
 import type { Property } from './properties';
 
-const API_BASE_URL = '/api';
+const API_BASE_URL = '';
 
 type FetchPropertiesParams = {
   location?: string;
