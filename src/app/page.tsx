@@ -80,10 +80,14 @@ export default function Home() {
           ))}
         </div>
       ) : error ? (
-        <div className="text-center py-16">
-          <h2 className="text-2xl font-semibold text-destructive">Something went wrong</h2>
-          <p className="text-muted-foreground mt-2">There was an issue fetching properties from the server.</p>
-          <p className="text-muted-foreground mt-1">{error}</p>
+        <div className="text-center py-16 bg-red-50 dark:bg-red-900/20 rounded-lg">
+          <h2 className="text-2xl font-semibold text-destructive">Internal Server Error</h2>
+          <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
+            The server encountered an error while trying to fetch properties. This is not a frontend issue.
+          </p>
+          <p className="text-sm text-muted-foreground mt-2">Please check the logs of your backend server for more details.</p>
+          <p className="font-mono bg-slate-100 dark:bg-slate-800 rounded p-2 mt-2 inline-block text-xs text-destructive">{error}</p>
+          <br />
           <Button onClick={loadProperties} className="mt-4">Try Again</Button>
         </div>
       ) : properties.length > 0 ? (
