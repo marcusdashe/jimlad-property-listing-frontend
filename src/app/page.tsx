@@ -37,6 +37,7 @@ export default function Home() {
         setError(response.message || 'Failed to fetch properties.');
       }
     } catch (err: any) {
+      console.error("API Error:", err);
       setError(err.message || 'An error occurred while fetching properties.');
     } finally {
       setLoading(false);
