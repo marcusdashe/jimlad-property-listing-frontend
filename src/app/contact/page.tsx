@@ -147,7 +147,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="font-semibold">Our Office</h3>
-                  <p className="text-muted-foreground">123 Luxury Lane, Victoria Island, Lagos, Nigeria</p>
+                  <p className="text-muted-foreground">Local Council Development Area, Cottage, Road 9, Green leaf estate, oluodo, Igbogbo, Ikorodu, Lagos Igbogbo Bayeku, Ikorodu 111104, Lagos</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
