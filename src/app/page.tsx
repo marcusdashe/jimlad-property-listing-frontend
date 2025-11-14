@@ -6,6 +6,7 @@ import { fetchProperties } from '@/lib/api';
 import { PropertyCard } from '@/components/property-card';
 import { SearchBar } from '@/components/search-bar';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Button } from '@/components/ui/button';
 
 export default function Home() {
   const [properties, setProperties] = useState<Property[]>([]);
@@ -81,8 +82,9 @@ export default function Home() {
       ) : error ? (
         <div className="text-center py-16">
           <h2 className="text-2xl font-semibold text-destructive">Something went wrong</h2>
-          <p className="text-muted-foreground mt-2">{error}</p>
-          <p className="text-muted-foreground mt-2">There was an issue on the server. Please check your backend logs.</p>
+          <p className="text-muted-foreground mt-2">There was an issue fetching properties from the server.</p>
+          <p className="text-muted-foreground mt-1">{error}</p>
+          <Button onClick={loadProperties} className="mt-4">Try Again</Button>
         </div>
       ) : properties.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
