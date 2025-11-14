@@ -1,14 +1,16 @@
-<svg width="180" height="40" viewBox="0 0 180 40" xmlns="http://www.w3.org/2000/svg">
-  <style>
+<svg width="180" height="40" viewBox="0 0 180 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<style>
     .text {
-      font-family: 'Inter', sans-serif;
-      font-size: 20px;
-      font-weight: bold;
-      fill: hsl(224, 76%, 8%);
+        font-family: 'Inter', sans-serif;
+        font-size: 24px;
+        font-weight: bold;
+        fill: hsl(var(--primary-foreground));
     }
-    .dark .text {
-      fill: hsl(48, 33%, 94%);
+    @media (prefers-color-scheme: dark) {
+        .text {
+            fill: hsl(var(--foreground));
+        }
     }
-  </style>
-  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="text">Jimlad Properties</text>
+</style>
+<text x="0" y="28" class="text">Jimlad Properties</text>
 </svg>
