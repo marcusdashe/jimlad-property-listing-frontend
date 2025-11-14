@@ -37,6 +37,7 @@ export async function fetchProperties(params: FetchPropertiesParams): Promise<Ap
     return response.json();
   } catch (error: any) {
     console.error('Fetch properties error:', error);
+    // Return a structured error that the frontend can display
     return { success: false, message: error.message || 'An unknown network error occurred.', data: [] };
   }
 }
@@ -50,15 +51,24 @@ export async function createProperty(formData: FormData): Promise<ApiResponse<Pr
             body: formData,
         });
 
+        // Use response.json() to get the body for both success and error cases
         const responseData = await response.json();
 
         if (!response.ok) {
+            // If response is not ok, use the message from the JSON body
             throw new Error(responseData.message || `Failed to create property. Status: ${response.status}`);
         }
         
         return responseData;
     } catch (error: any) {
         console.error('Create property error:', error);
-        return { success: false, message: error.message || 'An unknown network error occurred.', data: null as any };
+        // Ensure even network errors or non-JSON responses are handled gracefully
+        return { 
+            success: false, 
+            message: error.message || 'An unknown network error occurred.', 
+            data: null as any,
+            // If the error response contains validation errors, pass them along
+            errors: error.errors || undefined
+        };
     }
 }

@@ -74,7 +74,7 @@ export default function ListPropertyPage() {
       router.push('/');
     } else {
         const errorMessage = response.errors 
-            ? response.errors.map(e => e.message).join(', ')
+            ? response.errors.map(e => `${e.field}: ${e.message}`).join(', ')
             : response.message || "An unknown error occurred.";
       toast({
         variant: "destructive",
