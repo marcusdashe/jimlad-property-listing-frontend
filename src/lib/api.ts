@@ -8,15 +8,17 @@ type FetchPropertiesParams = {
   maxPrice?: string;
 };
 
-type FetchPropertiesResponse = {
-  success: boolean;
-  count: number;
-  filters: any;
-  data: Property[];
-  message?: string;
+type ApiResponse<T> = {
+    success: boolean;
+    message?: string;
+    data: T;
+    count?: number;
+    filters?: any;
+    errors?: { field: string; message: string }[];
 };
 
-export async function fetchProperties(params: FetchPropertiesParams): Promise<FetchPropertiesResponse> {
+
+export async function fetchProperties(params: FetchPropertiesParams): Promise<ApiResponse<Property[]>> {
   const query = new URLSearchParams();
   if (params.location) query.append('location', params.location);
   if (params.minPrice) query.append('minPrice', params.minPrice);
@@ -25,12 +27,29 @@ export async function fetchProperties(params: FetchPropertiesParams): Promise<Fe
   const url = `${API_BASE_URL}/properties?${query.toString()}`;
   console.log(`Fetching properties from: ${url}`);
 
-  const response = await fetch(url);
-
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({ message: 'An unknown error occurred while communicating with the API.' }));
-    throw new Error(errorData.message || 'Failed to fetch properties');
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+        throw new Error(errorData?.message || `Failed to fetch properties. Status: ${response.status}`);
+    }
+    return response.json();
+  } catch (error: any) {
+    console.error('Fetch properties error:', error);
+    return { success: false, message: error.message || 'An unknown network error occurred.', data: [] };
   }
+}
 
-  return response.json();
+export async function createProperty(formData: FormData): Promise<ApiResponse<Property>> {
+    const url = `${API_BASE_URL}/properties`;
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            body: formData,
+        });
+        return response.json();
+    } catch (error: any) {
+        console.error('Create property error:', error);
+        return { success: false, message: error.message || 'An unknown network error occurred.', data: null as any };
+    }
 }
