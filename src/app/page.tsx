@@ -1,34 +1,57 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from 'react';
-import { getProperties, type Property } from '@/lib/properties';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import type { Property } from '@/lib/properties';
+import { fetchProperties } from '@/lib/api';
 import { PropertyCard } from '@/components/property-card';
 import { SearchBar } from '@/components/search-bar';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Home() {
   const [properties, setProperties] = useState<Property[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const loadProperties = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetchProperties({
+        location: searchTerm,
+        minPrice,
+        maxPrice,
+      });
+      if (response.success) {
+        // The API doesn't provide bedrooms, bathrooms, or rating, so we add dummy data.
+        const propertiesWithExtras = response.data.map(p => ({
+          ...p,
+          bedrooms: p.bedrooms || Math.floor(Math.random() * 4) + 1,
+          bathrooms: p.bathrooms || Math.floor(Math.random() * 3) + 1,
+          rating: p.rating || (Math.random() * (5.0 - 4.5) + 4.5),
+        }));
+        setProperties(propertiesWithExtras);
+      } else {
+        setError(response.message || 'Failed to fetch properties.');
+      }
+    } catch (err: any) {
+      setError(err.message || 'An error occurred while fetching properties.');
+    } finally {
+      setLoading(false);
+    }
+  }, [searchTerm, minPrice, maxPrice]);
 
   useEffect(() => {
-    // In a real app, you'd fetch this from an API
-    setProperties(getProperties());
-  }, []);
+    loadProperties();
+  }, [loadProperties]);
 
-  const filteredProperties = useMemo(() => {
-    return properties.filter(property => {
-      const searchLower = searchTerm.toLowerCase();
-      const matchesLocation = property.location.toLowerCase().includes(searchLower) || property.title.toLowerCase().includes(searchLower);
 
-      const min = minPrice ? parseFloat(minPrice) : 0;
-      const max = maxPrice ? parseFloat(maxPrice) : Infinity;
+  const handleSearch = () => {
+    loadProperties();
+  };
 
-      const matchesPrice = property.price >= min && property.price <= max;
-
-      return matchesLocation && matchesPrice;
-    });
-  }, [properties, searchTerm, minPrice, maxPrice]);
 
   return (
     <div className="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
@@ -39,11 +62,29 @@ export default function Home() {
         onLocationChange={setSearchTerm}
         onMinPriceChange={setMinPrice}
         onMaxPriceChange={setMaxPrice}
+        onSearch={handleSearch}
       />
 
-      {filteredProperties.length > 0 ? (
+      {loading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredProperties.map(property => (
+          {Array.from({ length: 8 }).map((_, i) => (
+             <div key={i} className="flex flex-col space-y-3">
+                <Skeleton className="h-[200px] w-full rounded-xl" />
+                <div className="space-y-2">
+                  <Skeleton className="h-4 w-4/5" />
+                  <Skeleton className="h-4 w-3/5" />
+                </div>
+             </div>
+          ))}
+        </div>
+      ) : error ? (
+        <div className="text-center py-16">
+          <h2 className="text-2xl font-semibold text-destructive">Error</h2>
+          <p className="text-muted-foreground mt-2">{error}</p>
+        </div>
+      ) : properties.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {properties.map(property => (
             <PropertyCard key={property.id} property={property} />
           ))}
         </div>

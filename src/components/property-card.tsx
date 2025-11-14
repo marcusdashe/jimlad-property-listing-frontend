@@ -25,11 +25,12 @@ export function PropertyCard({ property }: { property: Property }) {
         />
       </div>
       <CardHeader>
-        <CardTitle className="text-lg font-bold">{property.title}</CardTitle>
+        <CardTitle className="text-lg font-bold truncate">{property.title}</CardTitle>
         <CardDescription>{property.location}</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="flex items-center justify-between text-sm text-muted-foreground">
+         <p className="text-sm text-muted-foreground h-10 overflow-hidden text-ellipsis">{property.description}</p>
+        <div className="flex items-center justify-between text-sm text-muted-foreground mt-4">
           <div className="flex items-center gap-2">
             <Bed className="h-4 w-4" />
             <span>{property.bedrooms} Beds</span>
@@ -42,7 +43,7 @@ export function PropertyCard({ property }: { property: Property }) {
       </CardContent>
       <CardFooter className="flex items-center justify-between">
         <p className="text-lg font-semibold text-primary">
-          ₦{property.price.toLocaleString()}
+          ₦{Number(property.price).toLocaleString()}
         </p>
         <div className="flex items-center gap-1">
           <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />

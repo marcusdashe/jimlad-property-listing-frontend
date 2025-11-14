@@ -11,6 +11,7 @@ type SearchBarProps = {
   onLocationChange: (value: string) => void;
   onMinPriceChange: (value: string) => void;
   onMaxPriceChange: (value: string) => void;
+  onSearch: () => void;
 };
 
 export function SearchBar({
@@ -20,7 +21,15 @@ export function SearchBar({
   onLocationChange,
   onMinPriceChange,
   onMaxPriceChange,
+  onSearch,
 }: SearchBarProps) {
+  
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      onSearch();
+    }
+  };
+
   return (
     <div className="mb-8 rounded-lg bg-card p-4 shadow-md sm:p-6">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
@@ -34,6 +43,7 @@ export function SearchBar({
             placeholder="City, State, or Zip Code"
             value={location}
             onChange={(e) => onLocationChange(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
         </div>
         <div>
@@ -46,6 +56,7 @@ export function SearchBar({
             placeholder="Any"
             value={minPrice}
             onChange={(e) => onMinPriceChange(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
         </div>
         <div>
@@ -58,10 +69,11 @@ export function SearchBar({
             placeholder="Any"
             value={maxPrice}
             onChange={(e) => onMaxPriceChange(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
         </div>
         <div className="flex items-end">
-          <Button className="w-full">
+          <Button className="w-full" onClick={onSearch}>
             <Search className="mr-2 h-4 w-4" />
             Search
           </Button>
