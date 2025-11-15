@@ -6,7 +6,8 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://localhost:3000/:path*',
+         destination: 'https://jimlad-property-listing-backend-production.up.railway.app/:path*',
+        // destination: 'http://localhost:3000/:path*',
       },
     ]
   },
@@ -60,6 +61,18 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+         protocol: 'https' as const,
+        hostname: 'jimlad-property-listing-backend-production.up.railway.app',
+        port: '',
+        pathname: '/**',
+      },
+       {
+         protocol: 'http',
+        hostname: 'jimlad-property-listing-backend-production.up.railway.app',
+        port: '',
+        pathname: '/**',
+      }
     ],
   },
 };
