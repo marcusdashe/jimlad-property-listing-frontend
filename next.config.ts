@@ -72,7 +72,14 @@ const nextConfig: NextConfig = {
         hostname: 'jimlad-property-listing-backend-production.up.railway.app',
         port: '',
         pathname: '/**',
-      }
+      },
+
+       {
+         protocol: 'https' as const,
+        hostname: 'jimlad-property-listing-frontend.vercel.app/list-property',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };

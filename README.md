@@ -42,3 +42,4 @@ You need to have [Node.js](https://nodejs.org/en/) (which includes npm) and [Git
     Open your browser and navigate to [http://localhost:9002](http://localhost:9002) to see the application running.
 
 You are now all set to start making changes!
+
