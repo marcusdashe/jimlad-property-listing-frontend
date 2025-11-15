@@ -42,14 +42,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  async rewrites() {
-    return [
-      {
-        source: '/properties/:path*',
-        destination: 'http://localhost:3000/properties/:path*',
-      },
-    ]
-  },
 };
 
 export default nextConfig;
